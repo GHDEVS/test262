@@ -8,14 +8,14 @@ features: [regexp-duplicate-named-groups]
 includes: [compareArray.js]
 ---*/
 
-assert.compareArray(["b", "b"], "bab".match(/(?<x>a)|(?<x>b)/));
-assert.compareArray(["b", "b"], "bab".match(/(?<x>b)|(?<x>a)/));
+assert.compareArray("bab".match(/(?<x>a)|(?<x>b)/), ["b", "b"]);
+assert.compareArray("bab".match(/(?<x>b)|(?<x>a)/), ["b", "b"]);
 
-assert.compareArray(["aa", "aa", undefined], "aa".match(/(?:(?<x>a)|(?<x>b))\k<x>/));
-assert.compareArray(["bb", undefined, "bb"], "bb".match(/(?:(?<x>a)|(?<x>b))\k<x>/));
+assert.compareArray("aa".match(/(?:(?<x>a)|(?<x>b))\k<x>/), ["aa", "aa", undefined]);
+assert.compareArray("bb".match(/(?:(?<x>a)|(?<x>b))\k<x>/), ["bb", undefined, "bb"]);
 
 let matchResult = "aabb".match(/(?:(?:(?<x>a)|(?<x>b))\k<x>){2}/);
-assert.compareArray(["aabb", undefined, "bb"], matchResult);
+assert.compareArray(matchResult, ["aabb", undefined, "bb"]);
 assert.sameValue(matchResult.groups.x, "bb");
 
 let notMatched = "abab".match(/(?:(?:(?<x>a)|(?<x>b))\k<x>){2}/);
